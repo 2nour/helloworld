@@ -1,0 +1,88 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+    <button class="btn btn-info my-3" [routerLink]="['/to-do-ajout']" >ajouter to do</button>
+   
+   <h2>to do</h2>
+   <div *ngIf="todos.length > 0;then todoo else noTodo"></div>
+   <ng-template #noTodo> 
+         <div class="alert alert-warning">no TODOS</div>
+    </ng-template>
+
+   <ng-template #todoo>
+
+        <table class="table">
+                <thead>
+                    <th>numero</th>
+                    <th>titre</th>
+                    <th>date d'ajout</th>
+                    <th>action</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let todo of todos">
+                        <td>{{ todo.id }}</td>
+                        <td>{{ todo.titre }}</td>
+                        <td>{{ todo.dateAjout }}</td>
+                        <td>
+                            <button class="btn btn-success" (click)="tansfer(todo)" >terminer</button>
+                            <button class="btn btn-warning mx-3" [routerLink]="['/to-do-modif']">modifer</button>
+                            <button class="btn btn-danger" (click)="delete(todo)">supprimer</button>
+        
+        
+                    
+                        </td>
+                    </tr>
+                   
+                </tbody>
+        
+            </table>
+
+   </ng-template>
+
+
+   
+<hr>
+<h2>done</h2>
+
+<div *ngIf="dones.length > 0;then done else noDones"></div>
+   <ng-template #noDones> 
+         <div class="alert alert-warning">no DONES</div>
+    </ng-template>
+
+<ng-template #done>
+
+        <table class="table">
+                <thead>
+                    <th>numero</th>
+                    <th>titre</th>
+                    <th>date d'ajout</th>
+                    <th>date fin</th>
+        
+                    <th>action</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let done of dones">
+                        <td>{{ done.id}}</td>
+                        <td>{{ done.titre}}</td>
+                        <td>{{ done.datedeb}}</td>
+                        <td>{{ done.datefin}}</td>
+        
+                        <td>
+                            
+                            <button class="btn btn-danger" (click)="deletee(done)">supprimer</button>
+        
+        
+                    
+                        </td>
+                    </tr>
+                  
+                          
+                </tbody>
+        
+            </table>
+</ng-template>
+
+
+        
+</div>
+<app-footer></app-footer>
