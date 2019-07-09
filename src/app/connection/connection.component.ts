@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-connection',
@@ -7,9 +8,39 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConnectionComponent implements OnInit {
 
-  constructor() { }
+  connForm : FormGroup;
 
+  constructor(private fb:FormBuilder) { 
+     
+    this.connForm=fb.group({
+      email : new FormControl("",[
+        Validators.required,
+        Validators.email
+      ]),
+      pass : new FormControl("",[
+        Validators.required,
+
+      ])
+    })
+  }
+
+
+  get email()
+  {
+    return this.connForm.get('email');
+  }
+  get pass()
+  {
+    return this.connForm.get('pass');
+  }
   ngOnInit() {
   }
+  
+  connection()
+  {
+    console.log(this.connForm.value);
+  }
+
+
 
 }

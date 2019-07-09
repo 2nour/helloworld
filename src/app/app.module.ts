@@ -11,6 +11,7 @@ import { InscriptionComponent } from './inscription/inscription.component';
 import { ToDoListComponent } from './to-do-list/to-do-list.component';
 import { ToDoAjoutComponent } from './to-do-ajout/to-do-ajout.component';
 import { ToDoModifierComponent } from './to-do-modifier/to-do-modifier.component';
+import {FormsModule,ReactiveFormsModule} from '@angular/forms'
 
 @NgModule({
   declarations: [
@@ -26,8 +27,11 @@ import { ToDoModifierComponent } from './to-do-modifier/to-do-modifier.component
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule, 
+    FormsModule,
+    ReactiveFormsModule
   ],
+
   providers: [],
   bootstrap: [AppComponent]
 })
