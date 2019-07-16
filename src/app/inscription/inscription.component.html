@@ -1,12 +1,11 @@
-<app-navbar>
 
-</app-navbar>
 <div class="container span6">
 
   <form [formGroup]="subsform" (ngSubmit)="inscription()">
+
     <div class="row span6">
       <div class="col">
-        <input type="text" class="form-control" placeholder="First name" name="Fname" formControlName="prenom">
+        <input type="text" class="form-control" placeholder="First name" name="prenom" formControlName="prenom">
         <div class="alert alert-danger" *ngIf="prenom.touched && prenom.invalid">
           <div *ngIf="prenom.errors.required">
             le champ nom est obligatoire !
@@ -17,7 +16,7 @@
         </div>
       </div>
       <div class="col">
-        <input type="text" class="form-control" placeholder="Last name" name="Lname" formControlName="nom">
+        <input type="text" class="form-control" placeholder="Last name" name="nom" formControlName="nom">
         <div class="alert alert-danger" *ngIf="nom.touched && nom.invalid">
           <div *ngIf="nom.errors.required">
             le champ nom est obligatoire !
@@ -31,8 +30,8 @@
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="inputEmail4">Email</label>
-        <input type="email" class="form-control" id="inputEmail4" placeholder="Email" name="mail"
-          formControlName="email">
+        <input type="email" class="form-control" id="inputEmail4" placeholder="Email" name="email"
+          formControlName="email"  [(ngModel)]="user.email">
         <div class="alert alert-danger" *ngIf="email.touched && email.invalid">
 
           <div *ngIf="email.errors.required">
@@ -46,7 +45,7 @@
       <div class="form-group col-md-6">
         <label for="inputEmail4">Telephone</label>
         <input type="text" class="form-control" name="tel" formControlName="tel">
-        <div class="alert alert-danger" *ngIf="tel.touched && tel.invalid">
+        <div class="alert alert-danger" *ngIf="tel.touched && tel.invalid"  >
 
           <div *ngIf="tel.errors.required">
             le champ tel est obligatoire !
@@ -70,8 +69,8 @@
         <label for="inputPassword4">Password</label>
 
 
-        <input type="password" class="form-control" id="inputPassword4" placeholder="Password" name="mdp"
-          formControlName="motDePasse">
+        <input type="password" class="form-control" id="inputPassword4" placeholder="Password" name="motDePass"
+          formControlName="motDePass" >
         <div class="alert alert-danger" *ngIf="pass.touched && pass.invalid">
 
           <div *ngIf="pass.errors.required">
@@ -86,7 +85,7 @@
       </div>
       <div class="form-group col-md-6">
         <label for="inputPassword4">Confirm Password</label>
-        <input type="password" class="form-control" id="inputPassword4" placeholder="Password" name="mdp"
+        <input type="password" class="form-control" id="inputPassword4" placeholder="Password" name="ReMotDePass"
           formControlName="ReMotDePass">
         <div class="alert alert-danger" *ngIf="confirmPass.touched && confirmPass.invalid">
 

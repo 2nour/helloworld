@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { TodoService } from './../service/todo.service';
+import { Todo } from '../models/todo';
+import { Router } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-to-do-list',
@@ -7,68 +14,87 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ToDoListComponent implements OnInit {
 
-  todos = [{
-    id: 1,
-    titre: 'completer cours angular',
-    description: 'lire tt les chapitres du cours',
-    dateAjout: '05/07/2018'
-  },
-  {
-    id: 2,
-    titre: 'apprendre NodeJs',
-    description: 'lire tt les chapitres du framework NodeJs',
-    dateAjout: "05/07/2018"
-  },
-  {
-    id: 3,
-    titre: 'creer web service avec ExperssJs',
-    description: 'lire tt les chapitres du cours',
-    dateAjout: "06/07/2019"
-  }
-
-  ];
-  dones = [
-    {
-      id: 1,
-      titre: "apprendre html css javascript",
-      datedeb: "02/02/2020",
-      datefin: "05/02/2020"
-    },
-
-    {
-      id: 2,
-      titre: "apprendre BootStrap",
-      datedeb: "02/02/2012",
-      datefin: "05/02/2015"
-    },
-    {
-      id: 3,
-      titre: "creer un projet basique",
-      datedeb: "02/02/2019",
-      datefin: "05/02/2020"
-    }
-  ];
-  constructor() { }
+  todos = [];
+  dones = [];
+  constructor(private toastr: ToastrService, private _ts: TodoService, private router: Router) { }
 
   ngOnInit() {
     // liaison avec back-end
+
+    let token = localStorage.getItem("token");
+
+    this._ts.showTodos().subscribe((res) => { this.todos = res; })
+    this._ts.showDones().subscribe((res) => { this.dones = res; })
+
   }
 
   delete(todo) {
     let index = this.todos.indexOf(todo);
-    this.todos.splice(index, 1);
+    let id = (todo._id);
+    console.log(id);
+    let nom = todo.title;
+    this._ts.deleteTodos(id).subscribe((res) => {
+
+      this.toastr.success(nom + " deleted");
+      this.todos.splice(id, 1);
+
+
+
+    }, (err) => {
+      this.toastr.error(err);
+      console.log(err);
+
+    });
   }
 
   deletee(done) {
     let index = this.dones.indexOf(done);
-    this.dones.splice(index, 1);
+
+    let id = done._id;
+    let nom = done.title;
+    this._ts.deleteTodos(id).subscribe((res) => {
+
+      this.toastr.success(nom + " deleted");
+      this.dones.splice(index, 1);
+
+
+
+
+
+    }, (err) => {
+      this.toastr.error(err);
+      console.log(err);
+
+    });
   }
 
   tansfer(todo) {
 
     let index = this.todos.indexOf(todo);
-    this.todos.splice(index, 1);
+    let id = todo._id;
 
-    this.dones.push(todo);
+    console.log(id + "HERE IS THE ID");
+
+    this._ts.isDone(id).subscribe((res) => {
+
+      this.toastr.success("DONE");
+      this.todos.splice(index, 1);
+      this.dones.push(todo);
+
+
+    }, (err) => {
+      this.toastr.error(err);
+      console.log(err);
+
+    });
   }
+
+  modifier(todo) {
+
+    this.router.navigateByUrl('/to-do-ajout');
+    
+
+  }
+
+
 }

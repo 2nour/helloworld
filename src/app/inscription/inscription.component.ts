@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
+import { User } from '../models/user'
+import { UserServicesService } from './../service/user.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-inscription',
@@ -9,10 +14,10 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 export class InscriptionComponent implements OnInit {
 
   subsform: FormGroup;
+  user: User;
 
 
-
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private _us: UserServicesService, private toastr: ToastrService,private router:Router) {
     this.subsform = fb.group(
       {
         nom: new FormControl("", [
@@ -23,60 +28,78 @@ export class InscriptionComponent implements OnInit {
           Validators.required,
           Validators.pattern('[a-zA-Z][a-zA-Z]+')
         ]),
-        tel: new FormControl("",[
+        tel: new FormControl("", [
           Validators.required,
-        Validators.pattern('[0-9]+'),
-        Validators.minLength(8)
-        
+          Validators.pattern('[0-9]+'),
+          Validators.minLength(8)
+
         ]),
         email: new FormControl("",
-        [
-          Validators.required,
-          Validators.email
-        ]),
-        motDePasse: new FormControl("",[
+          [
+            Validators.required,
+            Validators.email
+          ]),
+        motDePass: new FormControl("", [
           Validators.required,
           Validators.minLength(6)
         ]),
-        ReMotDePass: new FormControl("",[
+        ReMotDePass: new FormControl("", [
           Validators.required,
         ])
       }
     );
   }
 
-  get nom() 
-  {
+  get nom() {
     return this.subsform.get('nom');
   }
-  get prenom() 
-  {
+  get prenom() {
     return this.subsform.get('prenom');
   }
 
-  get tel()
-  {
+  get tel() {
     return this.subsform.get('tel');
   }
-  get email()
-  {
+  get email() {
     return this.subsform.get('email');
   }
 
-  get pass()
-  {
-    return this.subsform.get('motDePasse');
+  get pass() {
+    return this.subsform.get('motDePass');
   }
-  get confirmPass()
-  {
+
+  get confirmPass() {
     return this.subsform.get('ReMotDePass');
   }
 
   ngOnInit() {
+    this.user = new User();
   }
 
   inscription() {
-    console.log(this.subsform.value);
+    // console.log(this.subsform.value);
+    let data = this.subsform.value;
+    let user = new User(data.nom,data.prenom,data.tel,data.email,data.motDePass);
+    
+
+    this._us.userIncription(user).subscribe((res) => {
+
+      this.toastr.success('user ajouté');
+
+      setTimeout(()=>{
+        this.router.navigate(['/to-do-list']);
+      },2000);
+
+    }, (err) => {
+      this.toastr.error('erreur d ajout');
+
+      console.log(err);
+    });
   }
 
+
+
+
 }
+
+
