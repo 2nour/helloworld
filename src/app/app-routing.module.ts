@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { ConnectionComponent } from './connection/connection.component';
-import { ToDoListComponent } from './to-do-list/to-do-list.component';
-import { ToDoAjoutComponent } from './to-do-ajout/to-do-ajout.component';
-import { ToDoModifierComponent } from './to-do-modifier/to-do-modifier.component';
-import { InscriptionComponent } from './inscription/inscription.component';
-import { NavbarComponent } from './navbar/navbar.component';
+import { HomeComponent } from './components/landing-page/home/home.component';
+import { ConnectionComponent } from './components/landing-page/connection/connection.component';
+import { ToDoListComponent } from './components/user/to-do-list/to-do-list.component';
+import { ToDoAjoutComponent } from './components/user/to-do-ajout/to-do-ajout.component';
+import { ToDoModifierComponent } from './components/user/to-do-modifier/to-do-modifier.component';
+import { InscriptionComponent } from './components/landing-page/inscription/inscription.component';
+import { NavbarComponent } from './components/landing-page/navbar/navbar.component';
 import { AuthGuard } from './auth.guard';
-import { AdminComponent } from './admin/admin.component';
+import { AdminComponent } from './components/admin/admin/admin.component';
+import { UserGuard } from './guards/user.guard';
+import { AdminGuard } from './guards/admin.guard';
 
 
 const routes: Routes = [
@@ -24,7 +26,7 @@ const routes: Routes = [
       {
         path: 'admin',
         component: AdminComponent,
-        canActivate:[AuthGuard]
+        canActivate:[AdminGuard]
       },
       
       {
@@ -32,14 +34,20 @@ const routes: Routes = [
         component: InscriptionComponent
       }, {
         path:'to-do-list',
-         component:ToDoListComponent
+         component:ToDoListComponent,
+         canActivate:[UserGuard]
+
        },
        {
         path:'to-do-ajout',
-         component:ToDoAjoutComponent
+         component:ToDoAjoutComponent,
+         canActivate:[UserGuard]
+
        }, {
         path:'to-do-modif',
-         component:ToDoModifierComponent
+         component:ToDoModifierComponent,
+         canActivate:[UserGuard]
+
        },
        {
         path: 'login',
