@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
+import { UserServicesService } from './../../../services/user.service';
+
 
 @Component({
   selector: 'app-navbar',
@@ -7,29 +9,32 @@ import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  url="./../assets/logo.png";
+  url = "./../assets/logo.png";
+  isConnected: boolean =false;
 
-  constructor(private router: Router) { }
-  isLogged : boolean = localStorage.getItem('token') != null ;
+  constructor(private router: Router, private _us: UserServicesService) { }
+  isLogged: boolean = localStorage.getItem('token') != null;
 
-  ngOnInit() {
-
-   this.updateLoggedIn();
+  ngOnInit()
+   {
+    if (this._us.isLoggedUser || this._us.isLoggedAdmin) {
+      this.isConnected = true;
+    }
+    else {
+      this.isConnected = false;
+    }
 
   }
 
-  updateLoggedIn(){
-    this.isLogged = localStorage.getItem('token') != null ;
-  }
 
-  conn(){
+  conn() {
     this.router.navigateByUrl('/login');
-    this.updateLoggedIn();  }
+  }
 
-  deco(){
+  deco() {
 
     localStorage.removeItem('token');
-    this.updateLoggedIn();
+    this.isConnected =false;
     this.router.navigateByUrl('/home');
   }
 

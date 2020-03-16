@@ -46,7 +46,7 @@ export class ConnectionComponent implements OnInit {
     return this.connForm.get('pass');
   }
   ngOnInit() {
-    //this.isLogged = localStorage.getItem('token') != null;
+    /*this.isLogged = localStorage.getItem('token') != null;
     if (this._us.isLoggedUser()) {
       this.route.navigate(['/to-do-list'])
     }
@@ -58,7 +58,7 @@ export class ConnectionComponent implements OnInit {
         this.route.navigate(['/admin'])
 
       }
-    }
+    }*/
 
 
   }
@@ -74,8 +74,6 @@ export class ConnectionComponent implements OnInit {
       this.toastr.success('connected');
       localStorage.setItem('token', res.token);
       console.log(res.token);
-      this.ngOnInit();
-      // this.route.navigateByUrl('/to-do-list');
 
     }, (err) => {
 

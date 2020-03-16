@@ -44,7 +44,7 @@ import { AdminComponent } from './components/admin/admin/admin.component';
     MaterialModule,
     HttpClientModule,
     ToastrModule.forRoot({
-      timeOut: 1000,
+      timeOut: 10000,
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
     })

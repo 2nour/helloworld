@@ -11,9 +11,9 @@
       </ul>
       <form class="form-inline my-2 my-lg-0">
 
-        <button class="btn btn-outline-primary" [routerLink]="['/inscription']"  *ngIf="!isLogged">inscription</button>
-        <button class="btn btn-outline-info " *ngIf="!isLogged" (click)="conn()">connection</button>
-        <button class="btn btn-danger " *ngIf="isLogged" (click)="deco()">deconnection</button> 
+        <button class="btn btn-outline-primary" [routerLink]="['/inscription']"  *ngIf="!isConnected">inscription</button>
+        <button class="btn btn-outline-info " *ngIf="!isConnected" (click)="conn()">connection</button>
+        <button class="btn btn-danger " *ngIf="isConnected" (click)="deco()">deconnection</button> 
   
       </form>
     </div>
